@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscando a los hermanos YAMI y YUMI</title>
+    <style>
+        /* ESTILOS: COLORES PASTEL Y TIERNOS */
+        body {
+            font-family: 'Varela Round', 'Arial Rounded MT Bold', sans-serif;
+            background-color: #fff0f5; /* Fondo rosa muy pálido */
+            color: #555;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 420px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border: 4px solid #ffb7b2; /* Borde rosa suave */
+        }
+        
+        /* 1. EL LOGO DE LA MARCA (Arriba, chiquito) */
+        .brand-logo {
+            max-width: 120px; 
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 50%;
+        }
+
+        /* 2. LA IMAGEN DE LOS NENES (Grande, bienvenida) */
+        .hero-image {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #ffe4e1;
+        }
+
+        h1 {
+            color: #ff6f61; /* Coral */
+            font-size: 24px;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        /* CAJA DE TEXTO (INPUT) */
+        input[type="text"] {
+            width: 70%;
+            padding: 12px;
+            font-size: 20px;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            margin: 15px 0;
+            text-transform: uppercase;
+            outline: none;
+            color: #555;
+        }
+        input:focus {
+            border-color: #ff6f61;
+        }
+
+        /* BOTÓN DE BUSCAR */
+        button {
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 0 #e04e40;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(2px);
+            box-shadow: none;
+        }
+
+        /* RESULTADOS */
+        .result-box {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            display: none; 
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ESTILO PARA YUMI (SOL/NENE) */
+        .yumi-style {
+            background-color: #fff8e1; /* Amarillo patito */
+            border: 2px solid #ffecb3;
+            color: #f57f17;
+        }
+        .yumi-badge {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* ESTILO PARA YAMI (LUNA/NENA) */
+        .yami-style {
+            background-color: #e3f2fd; /* Celeste bebé */
+            border: 2px solid #bbdefb;
+            color: #1565c0;
+        }
+        .yami-badge {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .footer-note {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <img src="logo.png" alt="Mercadito de Asia" class="brand-logo" onerror="this.style.display='none'">
+
+        <img src="portada.png" alt="Yumi y Yami" class="hero-image">
+
+        <h1>BUSCANDO A LOS HERMANOS YAMI Y YUMI</h1>
+        <p>Ingresá el código secreto que encontraste en tu caja.</p>
+
+        <input type="text" id="codigoInput" placeholder="EJ: A2580" maxlength="6">
+        <button onclick="verificarCodigo()">VER MI MISIÓN</button>
+
+        <div id="resultado" class="result-box"></div>
+
+        <div class="footer-note">
+            Mercadito de Asia &copy; 2025<br>
+            ¿Dudas? Instagram: @mercaditodeasia
+        </div>
+    </div>
+
+    <script>
+        function verificarCodigo() {
+            var codigo = document.getElementById('codigoInput').value.toUpperCase().trim();
+            var resultadoDiv = document.getElementById('resultado');
+            
+            resultadoDiv.style.display = 'none';
+            resultadoDiv.className = 'result-box'; 
+
+            if (codigo.length < 3) {
+                alert("⚠️ ¡Falta completar el código! Mirá bien el sticker.");
+                return;
+            }
+
+            var letra = codigo.charAt(0);
+            var numeros = codigo.substring(1);
+
+            // DETECTAR SI ES YUMI O YAMI
+            if (letra === 'A') {
+                // ES YUMI (Nene)
+                resultadoDiv.innerHTML = `
+                    <span class="yumi-badge">☀️👦🏻</span>
+                    <h3>¡Encontraste a YUMI!</h3>
+                    <p>Tu código único es: <b>${codigo}</b></p>
+                    <p>Tu misión es buscar a alguien que tenga a <b>YAMI (La nena)</b> con el código <b>B${numeros}</b>.</p>
+                    <div style="background:white; padding:10px; border-radius:10px; margin-top:15px; border:1px dashed #f57f17;">
+                        📸 <b>¡AHORA!</b> Sacale captura a esta pantalla y subila a tus historias etiquetándonos para que aparezca tu compañero.
+                    </div>
+                `;
+                resultadoDiv.classList.add('yumi-style');
+                resultadoDiv.style.display = 'block';
+
+            } else if (letra === 'B') {
+                // ES YAMI (Nena)
+                resultadoDiv.innerHTML = `
+                    <span class="yami-badge">🌙👧🏻</span>
+                    <h3>¡Encontraste a YAMI!</h3>
+                    <p>Tu código único es: <b>${codigo}</b></p>
+                    <p>Tu misión es buscar a alguien que tenga a <b>YUMI (El nene)</b> con el código <b>A${numeros}</b>.</p>
+                    <div style="background:white; padding:10px; border-radius:10px; margin-top:15px; border:1px dashed #1565c0;">
+                        📸 <b>¡AHORA!</b> Sacale captura a esta pantalla y subila a tus historias etiquetándonos para que aparezca tu compañero.
+                    </div>
+                `;
+                resultadoDiv.classList.add('yami-style');
+                resultadoDiv.style.display = 'block';
+
+            } else {
+                alert("🚫 Ese código no me suena... Asegurate que empiece con 'A' o 'B'.");
+            }
+        }
+    </script>
+</body>
+</html>
