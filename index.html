@@ -3,136 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mercadito de Asia - Misión Yami y Yumi</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <title>Misión Mercadito de Asia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
         :root {
-            --rosa: #ff99aa;
-            --naranja: #ff5e4d;
-            --fondo: #fff5f6;
+            --rojo: #e31e24;
+            --amarillo: #fdb913;
+            --rosa: #ffb6c1;
+            --celeste: #a2d2ff;
         }
         body {
-            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
-            background-color: var(--fondo);
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fff0f2;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            color: #333;
         }
-        .container {
+        .card {
             background: white;
             width: 90%;
-            max-width: 500px;
-            border-radius: 30px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 420px;
+            border-radius: 40px;
+            padding: 30px;
             text-align: center;
-            border: 4px solid var(--rosa);
+            box-shadow: 0 15px 35px rgba(227, 30, 36, 0.1);
+            border: 6px solid var(--rojo);
+            position: relative;
         }
-        .header-img { width: 120px; margin-bottom: 10px; }
-        .characters {
+        .logo { width: 140px; margin-bottom: 20px; }
+        
+        .personajes {
             display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
         }
-        .char { width: 45%; transition: transform 0.3s; }
-        .char:hover { transform: scale(1.1) rotate(5deg); }
-        
-        h1 { color: var(--naranja); font-size: 1.5rem; }
-        
-        input {
-            width: 80%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 15px;
-            font-size: 1rem;
-            margin-bottom: 15px;
-            outline: none;
-        }
-        input:focus { border-color: var(--naranja); }
+        .img-personaje { width: 100px; height: 100px; object-fit: contain; }
 
-        .btn {
-            background: var(--naranja);
+        h1 { font-family: 'Fredoka One', cursive; color: var(--rojo); font-size: 22px; margin-top: 0; }
+        p { color: #555; font-size: 16px; line-height: 1.4; }
+
+        .input-group { margin-bottom: 15px; }
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 3px solid #eee;
+            border-radius: 20px;
+            font-family: inherit;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input:focus { border-color: var(--amarillo); }
+
+        .btn-principal {
+            background: var(--rojo);
             color: white;
             border: none;
-            padding: 15px 30px;
+            padding: 18px 40px;
             border-radius: 50px;
-            font-weight: bold;
+            font-family: 'Fredoka One', cursive;
+            font-size: 18px;
             cursor: pointer;
-            font-size: 1.1rem;
-            box-shadow: 0 5px 0 #c44536;
+            width: 100%;
+            box-shadow: 0 6px 0 #9e1418;
             transition: all 0.2s;
         }
-        .btn:active { transform: translateY(4px); box-shadow: none; }
+        .btn-principal:active { transform: translateY(4px); box-shadow: none; }
 
-        #area-mision { display: none; margin-top: 20px; padding: 20px; background: #fff0f3; border-radius: 20px; }
+        #seccion-premios { display: none; }
         
-        .download-zone {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
+        .lista-descargas {
+            background: #fdf2f3;
+            border-radius: 25px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
         }
-        .item-download {
+        .link-descarga {
+            display: block;
             background: white;
-            padding: 10px;
-            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 15px;
             text-decoration: none;
-            color: var(--naranja);
-            font-size: 0.8rem;
-            border: 1px dashed var(--naranja);
+            color: var(--rojo);
+            font-weight: bold;
+            border-left: 5px solid var(--amarillo);
         }
     </style>
 </head>
 <body>
 
-<div class="container animate__animated animate__fadeIn">
-    <img src="https://mercaditodeasia-lang.github.io/logo.png" class="header-img" alt="Logo">
-    
-    <div class="characters">
-        <img src="2.jpg" class="char animate__animated animate__bounceInLeft" alt="Yami">
-        <img src="1.jpg" class="char animate__animated animate__bounceInRight" alt="Yumi">
-    </div>
+<div class="card animate__animated animate__zoomIn">
+    <img src="https://mercaditodeasia-lang.github.io/logo.png" alt="Mercadito de Asia" class="logo">
 
-    <div id="pantalla-inicio">
-        <h1>¡HOLA EXPLORADOR!</h1>
-        <p>¿Tenés el código secreto de tu caja?</p>
-        <input type="text" id="codigo" placeholder="Ej: A2580">
-        <br>
-        <button class="btn" onclick="desbloquearMision()">¡VER MI MISIÓN!</button>
-    </div>
-
-    <div id="area-mision" class="animate__animated animate__jackInTheBox">
-        <h2>✨ ¡Misión Desbloqueada! ✨</h2>
-        <p>Antes de empezar, dejanos tu mail para enviarte nuevos desafíos cada mes:</p>
-        
-        <form action="https://formspree.io/f/TU_ID_AQUÍ" method="POST"> <input type="email" name="email" placeholder="Mail de mamá o papá" required>
-            <button type="submit" class="btn" style="background: var(--rosa); box-shadow: 0 5px 0 #e68090;">SUSCRIBIRME</button>
-        </form>
-
-        <hr style="margin: 20px 0; border: 1px solid #ddd;">
-
-        <h3>🎁 Tus Regalos de Hoy:</h3>
-        <div class="download-zone">
-            <a href="dibujo-para-colorear.pdf" class="item-download" download>🖍️ Dibujo para Colorear</a>
-            <a href="audio-historia.mp3" class="item-download">🎧 Escuchar Cuento</a>
-            <a href="receta-ramen.pdf" class="item-download" download>🍜 Receta Divertida</a>
-            <a href="#" class="item-download">🎮 Juego Online</a>
+    <div id="paso-1">
+        <div class="personajes">
+            <img src="2.jpg" alt="Yami" class="img-personaje animate__animated animate__bounceInLeft">
+            <img src="1.jpg" alt="Yumi" class="img-personaje animate__animated animate__bounceInRight">
         </div>
+        <h1>¡DESBLOQUEÁ TU MISIÓN!</h1>
+        <p>Ingresá el código de tu caja y tu email para descubrir las sorpresas que tenemos para vos.</p>
+        
+        <form id="form-registro" onsubmit="validarYMostrar(event)">
+            <div class="input-group">
+                <input type="text" id="codigo" placeholder="Código secreto (Ej: A2580)" required>
+            </div>
+            <div class="input-group">
+                <input type="email" id="user_email" placeholder="Email de papá o mamá" required>
+            </div>
+            <button type="submit" class="btn-principal">¡QUIERO MI MISIÓN!</button>
+        </form>
+    </div>
+
+    <div id="seccion-premios" class="animate__animated animate__fadeInUp">
+        <h1>✨ ¡MISIÓN ACTIVADA! ✨</h1>
+        <p>¡Gracias por sumarte a la familia de Mercadito de Asia! Aquí tenés tus tesoros:</p>
+        
+        <div class="lista-descargas">
+            <a href="CUENTO-MERCADITO.mp3" class="link-descarga">🎧 Escuchar Cuento de Yami y Yumi</a>
+            <a href="DIBUJO-PARA-PINTAR.pdf" class="link-descarga" download>🖍️ Descargar Dibujo para Colorear</a>
+            <a href="JUEGO-DE-ASIA.pdf" class="link-descarga" download>🧩 Laberinto de Dulces (PDF)</a>
+        </div>
+        <p style="font-size: 12px; margin-top: 15px;">Te enviamos una sorpresa extra a tu mail 😉</p>
     </div>
 </div>
 
 <script>
-    function desbloquearMision() {
+    function validarYMostrar(event) {
+        event.preventDefault();
+        
         const codigo = document.getElementById('codigo').value;
-        if(codigo.length > 2) { // Aquí podrías poner una clave específica
-            document.getElementById('pantalla-inicio').style.display = 'none';
-            document.getElementById('area-mision').style.display = 'block';
-        } else {
-            alert("¡Ups! Ese código no parece correcto. Mirá bien tu caja.");
-        }
+        const email = document.getElementById('user_email').value;
+
+        // Aquí simulamos el envío de datos. 
+        // TIP: Podés usar un servicio como Formspree o Mailchimp aquí.
+        console.log("Datos capturados:", email, codigo);
+
+        // Cambiamos la vista
+        document.getElementById('paso-1').style.display = 'none';
+        document.getElementById('seccion-premios').style.display = 'block';
     }
 </script>
 
