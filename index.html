@@ -3,153 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Misión Mercadito de Asia</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <title>Buscando a Yumi y Yami - Mercadito de Asia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --rojo: #e31e24;
-            --amarillo: #fdb913;
-            --rosa: #ffb6c1;
-            --celeste: #a2d2ff;
+            --celeste: #BEE7E8;
+            --amarillo: #FFE28A;
+            --violeta: #D8C7F2;
+            --blanco: #FFFFFF;
+            --texto: #5A5A5A;
         }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
             font-family: 'Quicksand', sans-serif;
-            background-color: #fff0f2;
             margin: 0;
+            background-color: var(--celeste);
+            color: var(--texto);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
-        .card {
-            background: white;
+
+        /* Contenedor Principal */
+        #app-container {
             width: 90%;
-            max-width: 420px;
+            max-width: 450px;
+            background: var(--blanco);
             border-radius: 40px;
             padding: 30px;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(227, 30, 36, 0.1);
-            border: 6px solid var(--rojo);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
             position: relative;
         }
-        .logo { width: 140px; margin-bottom: 20px; }
-        
-        .personajes {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
+
+        .screen { display: none; }
+        .active { display: block; animation: fadeIn 0.5s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Estilos de Elementos */
+        h1 { color: #8A76AB; font-size: 1.5rem; }
+        p { font-size: 1.1rem; line-height: 1.4; }
+
+        img.avatar {
+            width: 140px;
+            height: auto;
             margin-bottom: 20px;
         }
-        .img-personaje { width: 100px; height: 100px; object-fit: contain; }
 
-        h1 { font-family: 'Fredoka One', cursive; color: var(--rojo); font-size: 22px; margin-top: 0; }
-        p { color: #555; font-size: 16px; line-height: 1.4; }
-
-        .input-group { margin-bottom: 15px; }
         input {
             width: 100%;
             padding: 15px;
-            border: 3px solid #eee;
+            border: 2px solid var(--violeta);
             border-radius: 20px;
-            font-family: inherit;
-            font-size: 16px;
-            box-sizing: border-box;
+            margin-bottom: 20px;
+            font-size: 1rem;
             outline: none;
-            transition: border-color 0.3s;
+            text-align: center;
         }
-        input:focus { border-color: var(--amarillo); }
 
-        .btn-principal {
-            background: var(--rojo);
-            color: white;
-            border: none;
-            padding: 18px 40px;
-            border-radius: 50px;
-            font-family: 'Fredoka One', cursive;
-            font-size: 18px;
-            cursor: pointer;
+        button {
             width: 100%;
-            box-shadow: 0 6px 0 #9e1418;
-            transition: all 0.2s;
-        }
-        .btn-principal:active { transform: translateY(4px); box-shadow: none; }
-
-        #seccion-premios { display: none; }
-        
-        .lista-descargas {
-            background: #fdf2f3;
+            padding: 18px;
+            border: none;
             border-radius: 25px;
-            padding: 20px;
-            margin-top: 20px;
-            text-align: left;
-        }
-        .link-descarga {
-            display: block;
-            background: white;
-            padding: 12px;
-            margin-bottom: 10px;
-            border-radius: 15px;
-            text-decoration: none;
-            color: var(--rojo);
+            font-size: 1.1rem;
             font-weight: bold;
-            border-left: 5px solid var(--amarillo);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 15px;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        button:active { transform: scale(0.95); }
+
+        .btn-principal { background-color: var(--amarillo); color: #705A00; }
+        .btn-secundario { background-color: var(--violeta); color: #5A4A75; }
+
+        /* Estrellas */
+        .stars-counter {
+            background: var(--amarillo);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Grid del Hub */
+        .hub-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: #F9F9F9;
+            padding: 20px;
+            border-radius: 20px;
+            border: 2px solid var(--celeste);
         }
     </style>
 </head>
 <body>
 
-<div class="card animate__animated animate__zoomIn">
-    <img src="./logotipo.png" alt="Mercadito de Asia" class="logo">
-
-    <div id="paso-1">
-        <div class="personajes">
-            <img src="2.jpg" alt="Yami" class="img-personaje animate__animated animate__bounceInLeft">
-            <img src="1.jpg" alt="Yumi" class="img-personaje animate__animated animate__bounceInRight">
-        </div>
-        <h1>¡DESBLOQUEÁ TU MISIÓN!</h1>
-        <p>Ingresá el código de tu caja y tu email para descubrir las sorpresas que tenemos para vos.</p>
+    <div id="app-container">
         
-        <form id="form-registro" onsubmit="validarYMostrar(event)">
-            <div class="input-group">
-                <input type="text" id="codigo" placeholder="Código secreto (Ej: A2580)" required>
+        <section id="screen-home" class="screen active">
+            <img src="https://via.placeholder.com/150/D8C7F2/FFFFFF?text=Yumi+Y+Yami" alt="Yumi y Yami" class="avatar">
+            <h1>Mundo Mágico</h1>
+            <p>Yumi y Yami son hermanos que crean dulces con estrellas ✨</p>
+            <input type="email" id="user-email" placeholder="Email de un adulto">
+            <button class="btn-principal" onclick="goToOptions()">Entrar al mundo mágico</button>
+        </section>
+
+        <section id="screen-options" class="screen">
+            <h1>¿Tienes tu Box?</h1>
+            <button class="btn-principal" onclick="showScreen('screen-code')">Tengo un código</button>
+            <button class="btn-secundario" onclick="goToHub(false)">Todavía no tengo código</button>
+        </section>
+
+        <section id="screen-code" class="screen">
+            <h1>Escribe tu código</h1>
+            <input type="text" id="box-code" placeholder="Código secreto">
+            <button class="btn-principal" onclick="validateCode()">Validar código ✨</button>
+            <button onclick="showScreen('screen-options')" style="background:none; color: gray; font-size: 0.8rem;">Volver</button>
+        </section>
+
+        <section id="screen-search" class="screen">
+            <h1>¡Busca a tu hermano/a!</h1>
+            <p>Escribe el Instagram para encontrarlo</p>
+            <input type="text" id="insta-input" placeholder="@usuario">
+            <button class="btn-principal" onclick="searchSibling()">¡Buscar!</button>
+            <div id="search-result"></div>
+        </section>
+
+        <section id="screen-hub" class="screen">
+            <div class="stars-counter">✨ Estrellas: <span id="star-count">0</span></div>
+            <h1 id="welcome-msg">¡Hola!</h1>
+            
+            <div class="hub-grid">
+                <div class="card" onclick="addStar()">📖<br>Cuentos</div>
+                <div class="card" onclick="addStar()">🎮<br>Juegos</div>
+                <div class="card" onclick="addStar()">🎯<br>Misiones</div>
+                <div class="card" onclick="showScreen('screen-search')">🔍<br>Buscar</div>
             </div>
-            <div class="input-group">
-                <input type="email" id="user_email" placeholder="Email de papá o mamá" required>
+            
+            <div id="promo-box" style="margin-top:20px; font-size: 0.9rem; display:none;">
+                🌈 ¡Consigue tu box para desbloquear todo el poder!
             </div>
-            <button type="submit" class="btn-principal">¡QUIERO MI MISIÓN!</button>
-        </form>
+        </section>
+
     </div>
 
-    <div id="seccion-premios" class="animate__animated animate__fadeInUp">
-        <h1>✨ ¡MISIÓN ACTIVADA! ✨</h1>
-        <p>¡Gracias por sumarte a la familia de Mercadito de Asia! Aquí tenés tus tesoros:</p>
-        
-        <div class="lista-descargas">
-            <a href="CUENTO-MERCADITO.mp3" class="link-descarga">🎧 Escuchar Cuento de Yami y Yumi</a>
-            <a href="DIBUJO-PARA-PINTAR.pdf" class="link-descarga" download>🖍️ Descargar Dibujo para Colorear</a>
-            <a href="JUEGO-DE-ASIA.pdf" class="link-descarga" download>🧩 Laberinto de Dulces (PDF)</a>
-        </div>
-        <p style="font-size: 12px; margin-top: 15px;">Te enviamos una sorpresa extra a tu mail 😉</p>
-    </div>
-</div>
+    <script>
+        // --- VARIABLES GLOBALES ---
+        let userData = {
+            email: "",
+            hasCode: false,
+            stars: 0
+        };
 
-<script>
-    function validarYMostrar(event) {
-        event.preventDefault();
-        
-        const codigo = document.getElementById('codigo').value;
-        const email = document.getElementById('user_email').value;
+        const validCodes = ["MAGIA123", "YUMI2024", "YAMI2024"]; // Códigos simulados
 
-        // Aquí simulamos el envío de datos. 
-        // TIP: Podés usar un servicio como Formspree o Mailchimp aquí.
-        console.log("Datos capturados:", email, codigo);
+        // --- FUNCIONES DE NAVEGACIÓN ---
+        function showScreen(screenId) {
+            // Ocultar todas las pantallas
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            // Mostrar la seleccionada
+            document.getElementById(screenId).classList.add('active');
+        }
 
-        // Cambiamos la vista
-        document.getElementById('paso-1').style.display = 'none';
-        document.getElementById('seccion-premios').style.display = 'block';
-    }
-</script>
+        function goToOptions() {
+            const email = document.getElementById('user-email').value;
+            if(email.includes('@')) {
+                userData.email = email;
+                showScreen('screen-options');
+            } else {
+                alert("¡Ups! Por favor, pide a un adulto que escriba un email válido.");
+            }
+        }
 
+        function validateCode() {
+            const code = document.getElementById('box-code').value.toUpperCase();
+            if(validCodes.includes(code)) {
+                userData.hasCode = true;
+                alert("¡Código correcto! ¡Qué alegría! ✨");
+                goToHub(true);
+            } else {
+                alert("Ese código está descansando... ¡Prueba otro!");
+            }
+        }
+
+        function goToHub(withCode) {
+            userData.hasCode = withCode;
+            document.getElementById('welcome-msg').innerText = withCode ? "¡Mundo Completo!" : "¡Hola, Amiguito!";
+            
+            // Si no tiene código, mostramos el mensaje para conseguir la box
+            document.getElementById('promo-box').style.display = withCode ? 'none' : 'block';
+            
+            showScreen('screen-hub');
+        }
+
+        function addStar() {
+            userData.stars += 10;
+            document.getElementById('star-count').innerText = userData.stars;
+            // Pequeño efecto visual podrías añadir aquí
+        }
+
+        function searchSibling() {
+            const resultDiv = document.getElementById('search-result');
+            const results = [
+                "🎉 ¡El hermano apareció! ¡Estaba escondido en una nube!",
+                "🔍 Seguimos buscando... ¡Yami dice que está cerca!",
+                "✨ ¡Lo encontramos! Yumi le dio un dulce mágico."
+            ];
+            const random = results[Math.floor(Math.random() * results.length)];
+            resultDiv.innerHTML = `<p style="color:#8A76AB; font-weight:bold;">${random}</p>`;
+            
+            // Botón para volver al hub después de buscar
+            setTimeout(() => {
+                showScreen('screen-hub');
+                resultDiv.innerHTML = "";
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
