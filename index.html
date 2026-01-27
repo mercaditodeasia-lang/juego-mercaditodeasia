@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yami y Yumi - Mercadito de Asia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --rosa-yumi: #FFC1CC;
@@ -15,7 +17,8 @@
 
         body {
             background-color: var(--crema-fondo);
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            /* CAMBIAMOS LA LETRA AQUÍ */
+            font-family: 'Fredoka', sans-serif;
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -24,7 +27,7 @@
         }
 
         .header { margin-top: 20px; text-align: center; }
-        .logo { width: 150px; }
+        .logo { width: 150px; border-radius: 15px; }
         
         .personajes-container {
             display: flex;
@@ -33,7 +36,6 @@
             margin: 20px 0;
         }
 
-        /* AQUÍ ESTÁ EL CAMBIO: Movimiento sin duplicar nada */
         .nenes { 
             width: 110px; 
             border-radius: 50%; 
@@ -73,6 +75,8 @@
             border-radius: 20px;
             border: 2px solid var(--rosa-yumi);
             outline: none;
+            /* La letra también en los cuadritos de escribir */
+            font-family: 'Fredoka', sans-serif;
         }
 
         .btn {
@@ -82,9 +86,10 @@
             border-radius: 50px;
             border: none;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
             color: white;
+            font-family: 'Fredoka', sans-serif;
         }
 
         .btn-rosa { background-color: var(--rosa-yumi); box-shadow: 0 5px 0px #e0a3af; }
@@ -105,7 +110,7 @@
 
     <div class="header">
         <img src="logo.png" alt="Mercadito de Asia" class="logo">
-        <h2 id="titulo-principal">¡Hola Aventurero!</h2>
+        <h2 id="titulo-principal">¡Hola, estamos listo para la aventura!</h2>
     </div>
 
     <div class="personajes-container">
@@ -114,7 +119,7 @@
     </div>
 
     <div id="step-mail" class="form-container">
-        <p>Pide a un adulto que escriba su email para guardar tus premios:</p>
+        <p>Pide a un adulto su email para guardar tus premios:</p>
         <input type="email" id="user-email" placeholder="Email del adulto..." required>
         <button class="btn btn-rosa" onclick="saveEmail()">¡Comenzar!</button>
     </div>
@@ -177,7 +182,7 @@
             document.getElementById('step-games').classList.remove('hidden');
             if(isPremium) {
                 document.getElementById('zona-premium').classList.remove('hidden');
-                document.getElementById('mensaje-bienvenida').innerText = "¡Bienvenido, Hermano Mayor!";
+                document.getElementById('mensaje-bienvenida').innerText = "¡Bienvenido, Explorador!";
             } else { document.getElementById('mensaje-bienvenida').innerText = "¡Zona de Invitados!"; }
         }
     </script>
