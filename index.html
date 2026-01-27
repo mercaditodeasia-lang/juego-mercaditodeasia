@@ -13,16 +13,15 @@
         body {
             background-color: var(--crema-fondo); font-family: 'Fredoka', sans-serif;
             margin: 0; display: flex; flex-direction: column; align-items: center; color: var(--marron-trazo);
-            padding-bottom: 30px;
+            padding-bottom: 50px;
         }
         .header { margin-top: 20px; text-align: center; }
         .logo { width: 150px; border-radius: 15px; }
         .personajes-container { display: flex; justify-content: center; gap: 20px; margin: 20px 0; }
         .nenes { 
             width: 110px; border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            animation: aparecerSaltando 0.8s ease-out, flotar 3s ease-in-out infinite;
+            animation: flotar 3s ease-in-out infinite;
         }
-        @keyframes aparecerSaltando { 0% { transform: scale(0); opacity: 0; } 70% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); } }
         @keyframes flotar { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
         
         .form-container {
@@ -34,23 +33,21 @@
             border: 2px solid var(--rosa-yumi); outline: none; font-family: 'Fredoka', sans-serif; font-size: 16px;
         }
         .btn {
-            width: 100%; padding: 15px; margin: 10px 0; border-radius: 50px; border: none;
-            font-weight: bold; font-size: 18px; cursor: pointer; color: white; font-family: 'Fredoka', sans-serif;
-            transition: 0.3s;
+            width: 100%; padding: 15px; margin: 8px 0; border-radius: 50px; border: none;
+            font-weight: bold; font-size: 16px; cursor: pointer; color: white; font-family: 'Fredoka', sans-serif;
         }
-        .btn-rosa { background-color: var(--rosa-yumi); box-shadow: 0 5px 0px #e0a3af; }
-        .btn-azul { background-color: var(--azul-yami); box-shadow: 0 5px 0px #a2c8eb; }
-        .btn-amarillo { background-color: var(--amarillo-star); color: var(--marron-trazo); box-shadow: 0 5px 0px #e0cf78; }
-        .btn:active { transform: translateY(4px); box-shadow: none; }
+        .btn-rosa { background-color: var(--rosa-yumi); box-shadow: 0 4px 0px #e0a3af; }
+        .btn-azul { background-color: var(--azul-yami); box-shadow: 0 4px 0px #a2c8eb; }
+        .btn-amarillo { background-color: var(--amarillo-star); color: var(--marron-trazo); box-shadow: 0 4px 0px #e0cf78; }
+        .btn:active { transform: translateY(2px); box-shadow: none; }
         .hidden { display: none; }
         
         .card-juego { 
             background: #fff9e6; border: 2px dashed var(--rosa-yumi); 
             margin: 15px 0; padding: 15px; border-radius: 20px; text-align: left;
         }
-        .mision-badge {
-            background: var(--amarillo-star); font-size: 12px; padding: 4px 8px; border-radius: 10px; font-weight: bold;
-        }
+        .mision-badge { background: var(--amarillo-star); font-size: 12px; padding: 4px 8px; border-radius: 10px; font-weight: bold; }
+        .cuento-texto { font-size: 14px; line-height: 1.5; color: #444; background: white; padding: 10px; border-radius: 10px; display: none; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -66,63 +63,73 @@
     </div>
 
     <div id="step-mail" class="form-container">
-        <p>¡Pide a un grande que ponga su email para guardar tus premios!</p>
-        <input type="email" id="user-email" placeholder="Email de mamá o papá..." required>
-        <button class="btn btn-rosa" onclick="saveEmail()">¡Entrar a Jugar!</button>
+        <p>¡Pide a un grande que ponga su email para entrar!</p>
+        <input type="email" id="user-email" placeholder="Email del adulto...">
+        <button class="btn btn-rosa" onclick="saveEmail()">Entrar a Jugar</button>
     </div>
 
     <div id="step-options" class="form-container hidden">
         <p>¿Tienes el código mágico de tu caja?</p>
-        <button class="btn btn-rosa" onclick="showFormCodigo()">¡Tengo mi código! 🎁</button>
-        <button class="btn btn-azul" onclick="goGuest()">Quiero ver los juegos 🎮</button>
+        <button class="btn btn-rosa" onclick="showFormCodigo()">Tengo mi código</button>
+        <button class="btn btn-azul" onclick="goGuest()">No tengo el código</button>
     </div>
 
     <div id="step-verify" class="form-container hidden">
         <p>Escribe tu código y tu Instagram:</p>
         <input type="text" id="cupón" placeholder="Código de la caja">
         <input type="text" id="user-ig" placeholder="@tu_usuario">
-        <button class="btn btn-rosa" onclick="verifyCode()">🔍 Buscar a mi hermano</button>
-        <button class="btn btn-azul" onclick="backToOptions()" style="font-size: 12px; padding: 5px;">Volver</button>
+        <button class="btn btn-rosa" onclick="verifyCode()">Buscar a mi hermano</button>
+        <button class="btn btn-azul" onclick="backToOptions()" style="font-size: 12px; height: 35px;">Volver</button>
     </div>
 
     <div id="step-games" class="form-container hidden">
         <h3 id="mensaje-bienvenida">¡Zona de Diversión!</h3>
         
-        <div class="card-juego">
-            <span class="mision-badge">MISIÓN SEMANAL #1</span>
-            <p><b>El Dulce Oculto:</b> ¿Puedes encontrar el caramelo de color verde en tu caja? ¡Dinos su nombre!</p>
-            <input type="text" id="respuesta-mision" placeholder="Escribe aquí...">
+        <div id="mision-premium" class="card-juego hidden">
+            <span class="mision-badge">MISIÓN DE LA SEMANA</span>
+            <p><b>El Sticker Secreto:</b> Encuentra el sticker de Yami o Yumi en tu caja y dinos: ¿De qué color es el fondo del sticker?</p>
+            <input type="text" id="respuesta-mision" placeholder="Respuesta aquí...">
             <button class="btn btn-amarillo" onclick="enviarMision()">Enviar Misión</button>
         </div>
 
         <div class="card-juego">
-            <p>📖 <b>Cuento:</b> Yami y el Ramen Gigante</p>
-            <button class="btn btn-azul" onclick="alert('¡Estamos preparando este cuento para ti!')" style="font-size:14px;">Leer pronto</button>
+            <p>📖 <b>Cuento:</b> La Historia de Yami y Yumi</p>
+            <button class="btn btn-azul" onclick="toggleCuento()">Leer Cuento</button>
+            <div id="texto-cuento" class="cuento-texto">
+                ¡Hola! Somos Yami y Yumi. Vivimos en el <b>Bosque de los Sabores</b>, un lugar mágico donde las flores huelen a caramelo y los ríos son de jugo de frutas. <br><br>
+                Nos encanta viajar por toda Asia recolectando golosinas para compartirlas con amigos como tú. ¡Gracias por ayudarnos a estar juntos!
+            </div>
         </div>
 
-        <div id="zona-premium" class="card-juego hidden" style="border-color: gold; background: #fffdf0;">
+        <div class="card-juego">
+            <p>🎮 <b>Zona de Juegos:</b></p>
+            <button class="btn btn-amarillo" onclick="alert('¡Próximamente podrás descargar laberintos de Yami y Yumi!')">Descargar Juegos</button>
+        </div>
+
+        <div class="card-juego">
+            <p>🛍️ <b>Novedades Mercadito:</b></p>
+            <button class="btn btn-rosa" onclick="window.open('https://mercaditodeasia.com.ar', '_blank')">Ver Merchandising</button>
+        </div>
+
+        <div id="zona-premium" class="card-juego hidden" style="border-color: gold;">
             <p>🌟 <b>SORPRESA PREMIUM:</b></p>
-            <p>¡Por tener tu código, tienes un 10% de descuento en tu próxima Box con el código: <b>HERMANOS</b></p>
+            <p>Usa el código <b>HERMANOS</b> en tu próxima compra para un 10% OFF.</p>
         </div>
         
-        <button class="btn btn-azul" onclick="location.reload()" style="font-size:12px; background:#ccc; box-shadow:none;">Salir</button>
+        <button class="btn btn-azul" onclick="backToOptions()" style="background:#888; box-shadow:none;">Salir</button>
     </div>
 
     <script>
         let isPremium = false;
         const FORMSPREE_URL = "https://formspree.io/f/mojdryev"; 
 
-        async function saveEmail() {
+        function saveEmail() {
             const email = document.getElementById('user-email').value;
             if(email.includes('@')) {
-                fetch(FORMSPREE_URL, {
-                    method: 'POST',
-                    body: JSON.stringify({ email: email, accion: "Inició el juego" }),
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-                });
+                fetch(FORMSPREE_URL, { method: 'POST', body: JSON.stringify({ email: email, accion: "Login" }), headers: { 'Content-Type': 'application/json' } });
                 document.getElementById('step-mail').classList.add('hidden');
                 document.getElementById('step-options').classList.remove('hidden');
-            } else { alert("Escribe un email válido 🍬"); }
+            } else { alert("Escribe un mail válido 🍬"); }
         }
 
         function showFormCodigo() {
@@ -132,37 +139,19 @@
 
         function backToOptions() {
             document.getElementById('step-verify').classList.add('hidden');
+            document.getElementById('step-games').classList.add('hidden');
             document.getElementById('step-options').classList.remove('hidden');
+            document.getElementById('titulo-principal').innerText = "¡Hola Aventurero!";
         }
 
-        async function verifyCode() {
+        function verifyCode() {
             const code = document.getElementById('cupón').value;
-            const ig = document.getElementById('user-ig').value;
-            const email = document.getElementById('user-email').value;
             if(code.length > 2) {
                 isPremium = true;
-                fetch(FORMSPREE_URL, {
-                    method: 'POST',
-                    body: JSON.stringify({ email: email, codigo: code, instagram: ig, estado: "Premium" }),
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-                });
+                fetch(FORMSPREE_URL, { method: 'POST', body: JSON.stringify({ email: document.getElementById('user-email').value, codigo: code, ig: document.getElementById('user-ig').value }), headers: { 'Content-Type': 'application/json' } });
                 alert("¡Código Genial! ✨");
                 showGames();
             } else { alert("Escribe un código válido"); }
-        }
-
-        async function enviarMision() {
-            const respuesta = document.getElementById('respuesta-mision').value;
-            const email = document.getElementById('user-email').value;
-            if(respuesta.length > 2) {
-                fetch(FORMSPREE_URL, {
-                    method: 'POST',
-                    body: JSON.stringify({ email: email, mision: "Dulce Oculto", respuesta: respuesta }),
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-                });
-                alert("¡Misión enviada! Yami y Yumi están muy felices. 🍬");
-                document.getElementById('respuesta-mision').value = "";
-            } else { alert("¡Escribe algo primero!"); }
         }
 
         function goGuest() { isPremium = false; showGames(); }
@@ -171,11 +160,29 @@
             document.getElementById('step-options').classList.add('hidden');
             document.getElementById('step-verify').classList.add('hidden');
             document.getElementById('step-games').classList.remove('hidden');
+            
             if(isPremium) {
+                document.getElementById('mision-premium').classList.remove('hidden');
                 document.getElementById('zona-premium').classList.remove('hidden');
                 document.getElementById('mensaje-bienvenida').innerText = "¡Hola, Explorador Premium!";
-            } else { 
-                document.getElementById('mensaje-bienvenida').innerText = "¡Zona de Invitados!"; 
+            } else {
+                document.getElementById('mision-premium').classList.add('hidden');
+                document.getElementById('zona-premium').classList.add('hidden');
+                document.getElementById('mensaje-bienvenida').innerText = "¡Zona de Invitados!";
+            }
+        }
+
+        function toggleCuento() {
+            const c = document.getElementById('texto-cuento');
+            c.style.display = (c.style.display === 'block') ? 'none' : 'block';
+        }
+
+        function enviarMision() {
+            const r = document.getElementById('respuesta-mision').value;
+            if(r.length > 1) {
+                fetch(FORMSPREE_URL, { method: 'POST', body: JSON.stringify({ email: document.getElementById('user-email').value, mision: "Respuesta Sticker", respuesta: r }), headers: { 'Content-Type': 'application/json' } });
+                alert("¡Misión enviada! Yami y Yumi están muy felices. 🍬");
+                document.getElementById('respuesta-mision').value = "";
             }
         }
     </script>
