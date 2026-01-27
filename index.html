@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yami y Yumi - Mercadito de Asia</title>
     <style>
-        /* LOS COLORES DE YAMI Y YUMI */
         :root {
             --rosa-yumi: #FFC1CC;
             --azul-yami: #BDE0FE;
@@ -22,115 +21,83 @@
             flex-direction: column;
             align-items: center;
             color: var(--marron-trazo);
-            padding-bottom: 50px;
-            overflow-x: hidden;
         }
 
-        /* EL LOGO */
         .header { margin-top: 20px; text-align: center; }
-        .logo { width: 180px; border-radius: 20px; }
-
-        /* CONTENEDOR DE NENES CON MOVIMIENTO */
+        .logo { width: 150px; }
+        
         .personajes-container {
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin: 25px 0;
+            margin: 20px 0;
         }
 
+        /* AQUÍ ESTÁ EL CAMBIO: Movimiento sin duplicar nada */
         .nenes { 
-            width: 120px; 
+            width: 110px; 
             border-radius: 50%; 
-            border: 4px solid white; 
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-            /* ANIMACIÓN: Aparecen saltando y luego flotan */
-            animation: entradaSalto 0.8s ease-out, flotar 3s ease-in-out infinite;
+            border: 3px solid white; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            animation: aparecerSaltando 0.8s ease-out, flotar 3s ease-in-out infinite;
         }
-
-        /* Yumi salta primero, Yami un poquito después */
+        
         img[alt="Yumi"] { animation-delay: 0s, 0.2s; }
         img[alt="Yami"] { animation-delay: 0.2s, 0s; }
 
-        @keyframes entradaSalto {
-            0% { transform: scale(0) rotate(-20deg); opacity: 0; }
-            70% { transform: scale(1.2) rotate(10deg); opacity: 1; }
-            100% { transform: scale(1) rotate(0deg); }
+        @keyframes aparecerSaltando {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
         }
 
         @keyframes flotar {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-10px); }
         }
 
-        /* CAJITA BLANCA */
         .form-container {
             background: white;
-            padding: 25px;
-            border-radius: 35px;
+            padding: 20px;
+            border-radius: 30px;
             border: 4px solid var(--azul-yami);
             width: 85%;
             max-width: 400px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            animation: slideUp 0.5s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
 
         input {
             width: 85%;
-            padding: 15px;
+            padding: 12px;
             margin: 10px 0;
-            border-radius: 25px;
+            border-radius: 20px;
             border: 2px solid var(--rosa-yumi);
             outline: none;
-            font-size: 16px;
-            text-align: center;
         }
 
-        /* BOTONES */
         .btn {
-            width: 100%;
-            padding: 18px;
-            margin: 12px 0;
+            width: 95%;
+            padding: 15px;
+            margin: 10px 0;
             border-radius: 50px;
             border: none;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
             color: white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-            transition: 0.3s;
         }
 
-        .btn-rosa { 
-            background-color: var(--rosa-yumi); 
-            box-shadow: 0 6px 0px #e0a3af; 
-            /* Hace un latido suave para llamar la atención */
-            animation: latido 2s infinite;
-        }
-
-        .btn-azul { background-color: var(--azul-yami); box-shadow: 0 6px 0px #a2c8eb; }
-        .btn-amarillo { background-color: var(--amarillo-star); color: var(--marron-trazo); box-shadow: 0 6px 0px #e0cf78; }
+        .btn-rosa { background-color: var(--rosa-yumi); box-shadow: 0 5px 0px #e0a3af; }
+        .btn-azul { background-color: var(--azul-yami); box-shadow: 0 5px 0px #a2c8eb; }
+        .btn-amarillo { background-color: var(--amarillo-star); color: var(--marron-trazo); box-shadow: 0 5px 0px #e0cf78; }
 
         .btn:active { transform: translateY(4px); box-shadow: none; }
-
-        @keyframes latido {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-        }
-
         .hidden { display: none; }
 
         .card-juego {
             background: #fdfdfd;
             border: 2px dashed var(--rosa-yumi);
-            margin: 15px 0;
-            padding: 15px;
-            border-radius: 20px;
+            margin: 10px 0; padding: 15px; border-radius: 20px;
         }
     </style>
 </head>
@@ -138,7 +105,7 @@
 
     <div class="header">
         <img src="logo.png" alt="Mercadito de Asia" class="logo">
-        <h2 id="titulo-principal">¡Mundo Yami y Yumi!</h2>
+        <h2 id="titulo-principal">¡Hola Aventurero!</h2>
     </div>
 
     <div class="personajes-container">
@@ -147,90 +114,71 @@
     </div>
 
     <div id="step-mail" class="form-container">
-        <p>¡Hola! Para entrar, pide a un grande que ponga su email:</p>
-        <input type="email" id="user-email" placeholder="Email de mamá o papá..." required>
-        <button class="btn btn-rosa" onclick="saveEmail()">¡Entrar a Jugar! ✨</button>
+        <p>Pide a un adulto que escriba su email para guardar tus premios:</p>
+        <input type="email" id="user-email" placeholder="Email del adulto..." required>
+        <button class="btn btn-rosa" onclick="saveEmail()">¡Comenzar!</button>
     </div>
 
     <div id="step-options" class="form-container hidden">
-        <p>¿Tienes un código de tu Box?</p>
-        <button class="btn btn-rosa" onclick="showFormCodigo()">¡Sí, tengo código! 🎁</button>
-        <button class="btn btn-azul" onclick="goGuest()">No, quiero ver juegos 🎮</button>
+        <p>¿Tienes el código mágico de tu caja?</p>
+        <button class="btn btn-rosa" onclick="showFormCodigo()">¡Sí, lo tengo!</button>
+        <button class="btn btn-azul" onclick="goGuest()">No, quiero jugar igual</button>
     </div>
 
     <div id="step-verify" class="form-container hidden">
-        <p>Escribe tu código mágico:</p>
-        <input type="text" id="cupón" placeholder="Ej: ASIA123">
-        <p>Tu Instagram:</p>
-        <input type="text" id="user-ig" placeholder="@usuario">
-        <button class="btn btn-rosa" onclick="verifyCode()">🔍 Buscar hermano</button>
-        <button onclick="backToOptions()" style="background:none; border:none; color:grey; cursor:pointer; text-decoration:underline;">Volver atrás</button>
+        <p>Escribe el código de tu Box:</p>
+        <input type="text" id="cupón" placeholder="Ej: DULCE123">
+        <p>Tu Instagram para avisarte:</p>
+        <input type="text" id="user-ig" placeholder="@tu_usuario">
+        <button class="btn btn-rosa" onclick="verifyCode()">🔍 Buscar a mi hermano</button>
+        <button class="btn btn-azul" onclick="backToOptions()" style="font-size: 12px; padding: 5px;">Volver</button>
     </div>
 
     <div id="step-games" class="form-container hidden">
-        <h3 id="mensaje-bienvenida">¡Zona de Diversión!</h3>
+        <h3 id="mensaje-bienvenida">¡Zona de Juegos!</h3>
         <div class="card-juego">
-            <p>📖 <b>Cuento:</b> La aventura del dulce perdido</p>
-            <button class="btn btn-amarillo" onclick="alert('¡El cuento se está escribiendo, vuelve pronto!')">Leer cuento</button>
+            <p>📖 <b>Cuento:</b> Yami y el Ramen Gigante</p>
+            <button class="btn btn-amarillo" onclick="alert('¡Próximamente!')">Leer ahora</button>
         </div>
         <div id="zona-premium" class="card-juego hidden">
-            <p>⭐ <b>Misión Especial:</b> Encontrar el sticker</p>
-            <button class="btn btn-rosa" onclick="alert('¡Revisa tu caja de dulces!')">Ver misión</button>
+            <p>🌟 <b>Misión Especial:</b> Detective de Dulces</p>
+            <button class="btn btn-rosa" onclick="alert('Busca el sticker dorado en tu box!')">Ver Misión</button>
         </div>
-        <button class="btn btn-azul" onclick="location.reload()" style="font-size:14px;">Cerrar sesión</button>
+        <button class="btn btn-azul" onclick="location.reload()">Salir</button>
     </div>
 
     <script>
         let isPremium = false;
-
         function saveEmail() {
-            const email = document.getElementById('user-email').value;
-            if(email.includes('@')) {
-                console.log("Email anotado en la lista secreta:", email);
+            if(document.getElementById('user-email').value.includes('@')) {
                 document.getElementById('step-mail').classList.add('hidden');
                 document.getElementById('step-options').classList.remove('hidden');
-            } else {
-                alert("¡Ups! Ese no parece un email de verdad. Revisa si tiene el @ 🍭");
-            }
+            } else { alert("Escribe un email válido 🍬"); }
         }
-
         function showFormCodigo() {
             document.getElementById('step-options').classList.add('hidden');
             document.getElementById('step-verify').classList.remove('hidden');
         }
-
         function backToOptions() {
             document.getElementById('step-verify').classList.add('hidden');
             document.getElementById('step-options').classList.remove('hidden');
         }
-
         function verifyCode() {
-            const code = document.getElementById('cupón').value.trim();
-            if(code.length >= 4) {
+            if(document.getElementById('cupón').value.length > 3) {
                 isPremium = true;
-                alert("¡Código Genial! ✨ Ahora eres un Explorador Premium.");
+                alert("¡Código Genial!");
                 showGames();
-            } else {
-                alert("Ese código es muy cortito. ¡Prueba otra vez!");
-            }
+            } else { alert("Código no válido"); goGuest(); }
         }
-
-        function goGuest() {
-            isPremium = false;
-            showGames();
-        }
-
+        function goGuest() { isPremium = false; showGames(); }
         function showGames() {
             document.getElementById('step-options').classList.add('hidden');
             document.getElementById('step-verify').classList.add('hidden');
             document.getElementById('step-games').classList.remove('hidden');
-            
             if(isPremium) {
                 document.getElementById('zona-premium').classList.remove('hidden');
-                document.getElementById('mensaje-bienvenida').innerText = "¡Hola, Explorador Premium!";
-            } else {
-                document.getElementById('mensaje-bienvenida').innerText = "¡Zona de Invitados!";
-            }
+                document.getElementById('mensaje-bienvenida').innerText = "¡Bienvenido, Hermano Mayor!";
+            } else { document.getElementById('mensaje-bienvenida').innerText = "¡Zona de Invitados!"; }
         }
     </script>
 </body>
