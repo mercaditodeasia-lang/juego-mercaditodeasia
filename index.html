@@ -108,7 +108,7 @@ Esto recién empieza… y el viaje vale la pena 🍬🌈
 
         <div class="card-juego">
             <p>🎮 <b>Zona de Juegos:</b></p>
-            <button class="btn btn-amarillo" onclick="alert('¡Próximamente podrás descargar laberintos de Yami y Yumi!')">Descargar Juegos</button>
+            <button class="btn btn-amarillo" onclick="descargarJuego()">Descargar Juegos</button>
         </div>
 
         <div class="card-juego">
@@ -190,6 +190,9 @@ Esto recién empieza… y el viaje vale la pena 🍬🌈
                 document.getElementById('respuesta-mision').value = "";
             }
         }
-    </script>
+function descargarJuego() {
+    // Esto hace que cuando toquen el botón, se abra la imagen
+    window.open('juego1.jpg', '_blank');
+}</script>
 </body>
 </html>
