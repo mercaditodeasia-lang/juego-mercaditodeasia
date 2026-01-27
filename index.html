@@ -13,6 +13,7 @@
         body {
             background-color: var(--crema-fondo); font-family: 'Fredoka', sans-serif;
             margin: 0; display: flex; flex-direction: column; align-items: center; color: var(--marron-trazo);
+            padding-bottom: 30px;
         }
         .header { margin-top: 20px; text-align: center; }
         .logo { width: 150px; border-radius: 15px; }
@@ -23,24 +24,33 @@
         }
         @keyframes aparecerSaltando { 0% { transform: scale(0); opacity: 0; } 70% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); } }
         @keyframes flotar { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        
         .form-container {
-            background: white; padding: 20px; border-radius: 30px; border: 4px solid var(--azul-yami);
-            width: 85%; max-width: 400px; text-align: center;
+            background: white; padding: 25px; border-radius: 30px; border: 4px solid var(--azul-yami);
+            width: 85%; max-width: 400px; text-align: center; box-shadow: 0 8px 16px rgba(0,0,0,0.05);
         }
         input {
             width: 85%; padding: 12px; margin: 10px 0; border-radius: 20px;
-            border: 2px solid var(--rosa-yumi); outline: none; font-family: 'Fredoka', sans-serif;
+            border: 2px solid var(--rosa-yumi); outline: none; font-family: 'Fredoka', sans-serif; font-size: 16px;
         }
         .btn {
-            width: 95%; padding: 15px; margin: 10px 0; border-radius: 50px; border: none;
+            width: 100%; padding: 15px; margin: 10px 0; border-radius: 50px; border: none;
             font-weight: bold; font-size: 18px; cursor: pointer; color: white; font-family: 'Fredoka', sans-serif;
+            transition: 0.3s;
         }
         .btn-rosa { background-color: var(--rosa-yumi); box-shadow: 0 5px 0px #e0a3af; }
         .btn-azul { background-color: var(--azul-yami); box-shadow: 0 5px 0px #a2c8eb; }
         .btn-amarillo { background-color: var(--amarillo-star); color: var(--marron-trazo); box-shadow: 0 5px 0px #e0cf78; }
         .btn:active { transform: translateY(4px); box-shadow: none; }
         .hidden { display: none; }
-        .card-juego { background: #fdfdfd; border: 2px dashed var(--rosa-yumi); margin: 10px 0; padding: 15px; border-radius: 20px; }
+        
+        .card-juego { 
+            background: #fff9e6; border: 2px dashed var(--rosa-yumi); 
+            margin: 15px 0; padding: 15px; border-radius: 20px; text-align: left;
+        }
+        .mision-badge {
+            background: var(--amarillo-star); font-size: 12px; padding: 4px 8px; border-radius: 10px; font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -56,53 +66,58 @@
     </div>
 
     <div id="step-mail" class="form-container">
-        <form id="form-email">
-            <p>Pide a un adulto su email para guardar tus premios:</p>
-            <input type="email" name="email" id="user-email" placeholder="Email del adulto..." required>
-            <button type="button" class="btn btn-rosa" onclick="saveEmail()">¡Comenzar!</button>
-        </form>
+        <p>¡Pide a un grande que ponga su email para guardar tus premios!</p>
+        <input type="email" id="user-email" placeholder="Email de mamá o papá..." required>
+        <button class="btn btn-rosa" onclick="saveEmail()">¡Entrar a Jugar!</button>
     </div>
 
     <div id="step-options" class="form-container hidden">
         <p>¿Tienes el código mágico de tu caja?</p>
-        <button class="btn btn-rosa" onclick="showFormCodigo()">¡Sí, lo tengo!</button>
-        <button class="btn btn-azul" onclick="goGuest()">No, quiero jugar igual</button>
+        <button class="btn btn-rosa" onclick="showFormCodigo()">¡Tengo mi código! 🎁</button>
+        <button class="btn btn-azul" onclick="goGuest()">Quiero ver los juegos 🎮</button>
     </div>
 
     <div id="step-verify" class="form-container hidden">
-        <p>Escribe el código de tu Box:</p>
-        <input type="text" id="cupón" placeholder="Ej: DULCE123">
-        <p>Tu Instagram para avisarte:</p>
+        <p>Escribe tu código y tu Instagram:</p>
+        <input type="text" id="cupón" placeholder="Código de la caja">
         <input type="text" id="user-ig" placeholder="@tu_usuario">
         <button class="btn btn-rosa" onclick="verifyCode()">🔍 Buscar a mi hermano</button>
         <button class="btn btn-azul" onclick="backToOptions()" style="font-size: 12px; padding: 5px;">Volver</button>
     </div>
 
     <div id="step-games" class="form-container hidden">
-        <h3 id="mensaje-bienvenida">¡Zona de Juegos!</h3>
+        <h3 id="mensaje-bienvenida">¡Zona de Diversión!</h3>
+        
+        <div class="card-juego">
+            <span class="mision-badge">MISIÓN SEMANAL #1</span>
+            <p><b>El Dulce Oculto:</b> ¿Puedes encontrar el caramelo de color verde en tu caja? ¡Dinos su nombre!</p>
+            <input type="text" id="respuesta-mision" placeholder="Escribe aquí...">
+            <button class="btn btn-amarillo" onclick="enviarMision()">Enviar Misión</button>
+        </div>
+
         <div class="card-juego">
             <p>📖 <b>Cuento:</b> Yami y el Ramen Gigante</p>
-            <button class="btn btn-amarillo" onclick="alert('¡Próximamente!')">Leer ahora</button>
+            <button class="btn btn-azul" onclick="alert('¡Estamos preparando este cuento para ti!')" style="font-size:14px;">Leer pronto</button>
         </div>
-        <div id="zona-premium" class="card-juego hidden">
-            <p>🌟 <b>Misión Especial:</b> Detective de Dulces</p>
-            <button class="btn btn-rosa" onclick="alert('Busca el sticker dorado en tu box!')">Ver Misión</button>
+
+        <div id="zona-premium" class="card-juego hidden" style="border-color: gold; background: #fffdf0;">
+            <p>🌟 <b>SORPRESA PREMIUM:</b></p>
+            <p>¡Por tener tu código, tienes un 10% de descuento en tu próxima Box con el código: <b>HERMANOS</b></p>
         </div>
-        <button class="btn btn-azul" onclick="location.reload()">Salir</button>
+        
+        <button class="btn btn-azul" onclick="location.reload()" style="font-size:12px; background:#ccc; box-shadow:none;">Salir</button>
     </div>
 
     <script>
         let isPremium = false;
-        // 🚨 AQUÍ PEGA TU LINK DE FORMSPREE 🚨
-        const FORMSPREE_URL = "ESCRIBE_AQUI_TU_LINK_DE_FORMSPREE"; 
+        const FORMSPREE_URL = "https://formspree.io/f/mojdryev"; 
 
         async function saveEmail() {
             const email = document.getElementById('user-email').value;
             if(email.includes('@')) {
-                // Esto manda el mail de verdad
                 fetch(FORMSPREE_URL, {
                     method: 'POST',
-                    body: JSON.stringify({ email: email, mensaje: "Se unió a la aventura" }),
+                    body: JSON.stringify({ email: email, accion: "Inició el juego" }),
                     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
                 });
                 document.getElementById('step-mail').classList.add('hidden');
@@ -123,16 +138,31 @@
         async function verifyCode() {
             const code = document.getElementById('cupón').value;
             const ig = document.getElementById('user-ig').value;
-            if(code.length > 3) {
+            const email = document.getElementById('user-email').value;
+            if(code.length > 2) {
                 isPremium = true;
                 fetch(FORMSPREE_URL, {
                     method: 'POST',
-                    body: JSON.stringify({ email: document.getElementById('user-email').value, codigo: code, instagram: ig }),
+                    body: JSON.stringify({ email: email, codigo: code, instagram: ig, estado: "Premium" }),
                     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
                 });
-                alert("¡Código Genial!");
+                alert("¡Código Genial! ✨");
                 showGames();
-            } else { alert("Código no válido"); goGuest(); }
+            } else { alert("Escribe un código válido"); }
+        }
+
+        async function enviarMision() {
+            const respuesta = document.getElementById('respuesta-mision').value;
+            const email = document.getElementById('user-email').value;
+            if(respuesta.length > 2) {
+                fetch(FORMSPREE_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ email: email, mision: "Dulce Oculto", respuesta: respuesta }),
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
+                });
+                alert("¡Misión enviada! Yami y Yumi están muy felices. 🍬");
+                document.getElementById('respuesta-mision').value = "";
+            } else { alert("¡Escribe algo primero!"); }
         }
 
         function goGuest() { isPremium = false; showGames(); }
@@ -143,8 +173,10 @@
             document.getElementById('step-games').classList.remove('hidden');
             if(isPremium) {
                 document.getElementById('zona-premium').classList.remove('hidden');
-                document.getElementById('mensaje-bienvenida').innerText = "¡Bienvenido, Explorador!";
-            } else { document.getElementById('mensaje-bienvenida').innerText = "¡Zona de Invitados!"; }
+                document.getElementById('mensaje-bienvenida').innerText = "¡Hola, Explorador Premium!";
+            } else { 
+                document.getElementById('mensaje-bienvenida').innerText = "¡Zona de Invitados!"; 
+            }
         }
     </script>
 </body>
