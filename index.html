@@ -5,112 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yami y Yumi - Mercadito de Asia</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
-    
     <style>
         :root {
-            --rosa-yumi: #FFC1CC;
-            --azul-yami: #BDE0FE;
-            --amarillo-star: #FFEA88;
-            --marron-trazo: #5D4037;
-            --crema-fondo: #FFFBF2;
+            --rosa-yumi: #FFC1CC; --azul-yami: #BDE0FE; --amarillo-star: #FFEA88;
+            --marron-trazo: #5D4037; --crema-fondo: #FFFBF2;
         }
-
         body {
-            background-color: var(--crema-fondo);
-            /* CAMBIAMOS LA LETRA AQUÍ */
-            font-family: 'Fredoka', sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--marron-trazo);
+            background-color: var(--crema-fondo); font-family: 'Fredoka', sans-serif;
+            margin: 0; display: flex; flex-direction: column; align-items: center; color: var(--marron-trazo);
         }
-
         .header { margin-top: 20px; text-align: center; }
         .logo { width: 150px; border-radius: 15px; }
-        
-        .personajes-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
+        .personajes-container { display: flex; justify-content: center; gap: 20px; margin: 20px 0; }
         .nenes { 
-            width: 110px; 
-            border-radius: 50%; 
-            border: 3px solid white; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 110px; border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             animation: aparecerSaltando 0.8s ease-out, flotar 3s ease-in-out infinite;
         }
-        
-        img[alt="Yumi"] { animation-delay: 0s, 0.2s; }
-        img[alt="Yami"] { animation-delay: 0.2s, 0s; }
-
-        @keyframes aparecerSaltando {
-            0% { transform: scale(0); opacity: 0; }
-            70% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes flotar {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
+        @keyframes aparecerSaltando { 0% { transform: scale(0); opacity: 0; } 70% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); } }
+        @keyframes flotar { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
         .form-container {
-            background: white;
-            padding: 20px;
-            border-radius: 30px;
-            border: 4px solid var(--azul-yami);
-            width: 85%;
-            max-width: 400px;
-            text-align: center;
+            background: white; padding: 20px; border-radius: 30px; border: 4px solid var(--azul-yami);
+            width: 85%; max-width: 400px; text-align: center;
         }
-
         input {
-            width: 85%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 20px;
-            border: 2px solid var(--rosa-yumi);
-            outline: none;
-            /* La letra también en los cuadritos de escribir */
-            font-family: 'Fredoka', sans-serif;
+            width: 85%; padding: 12px; margin: 10px 0; border-radius: 20px;
+            border: 2px solid var(--rosa-yumi); outline: none; font-family: 'Fredoka', sans-serif;
         }
-
         .btn {
-            width: 95%;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 50px;
-            border: none;
-            font-weight: bold;
-            font-size: 18px;
-            cursor: pointer;
-            color: white;
-            font-family: 'Fredoka', sans-serif;
+            width: 95%; padding: 15px; margin: 10px 0; border-radius: 50px; border: none;
+            font-weight: bold; font-size: 18px; cursor: pointer; color: white; font-family: 'Fredoka', sans-serif;
         }
-
         .btn-rosa { background-color: var(--rosa-yumi); box-shadow: 0 5px 0px #e0a3af; }
         .btn-azul { background-color: var(--azul-yami); box-shadow: 0 5px 0px #a2c8eb; }
         .btn-amarillo { background-color: var(--amarillo-star); color: var(--marron-trazo); box-shadow: 0 5px 0px #e0cf78; }
-
         .btn:active { transform: translateY(4px); box-shadow: none; }
         .hidden { display: none; }
-
-        .card-juego {
-            background: #fdfdfd;
-            border: 2px dashed var(--rosa-yumi);
-            margin: 10px 0; padding: 15px; border-radius: 20px;
-        }
+        .card-juego { background: #fdfdfd; border: 2px dashed var(--rosa-yumi); margin: 10px 0; padding: 15px; border-radius: 20px; }
     </style>
 </head>
 <body>
 
     <div class="header">
         <img src="logo.png" alt="Mercadito de Asia" class="logo">
-        <h2 id="titulo-principal">¡Hola, estamos listo para la aventura!</h2>
+        <h2 id="titulo-principal">¡Hola, estamos listos para la aventura!</h2>
     </div>
 
     <div class="personajes-container">
@@ -119,9 +56,11 @@
     </div>
 
     <div id="step-mail" class="form-container">
-        <p>Pide a un adulto su email para guardar tus premios:</p>
-        <input type="email" id="user-email" placeholder="Email del adulto..." required>
-        <button class="btn btn-rosa" onclick="saveEmail()">¡Comenzar!</button>
+        <form id="form-email">
+            <p>Pide a un adulto su email para guardar tus premios:</p>
+            <input type="email" name="email" id="user-email" placeholder="Email del adulto..." required>
+            <button type="button" class="btn btn-rosa" onclick="saveEmail()">¡Comenzar!</button>
+        </form>
     </div>
 
     <div id="step-options" class="form-container hidden">
@@ -154,28 +93,50 @@
 
     <script>
         let isPremium = false;
-        function saveEmail() {
-            if(document.getElementById('user-email').value.includes('@')) {
+        // 🚨 AQUÍ PEGA TU LINK DE FORMSPREE 🚨
+        const FORMSPREE_URL = "ESCRIBE_AQUI_TU_LINK_DE_FORMSPREE"; 
+
+        async function saveEmail() {
+            const email = document.getElementById('user-email').value;
+            if(email.includes('@')) {
+                // Esto manda el mail de verdad
+                fetch(FORMSPREE_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ email: email, mensaje: "Se unió a la aventura" }),
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
+                });
                 document.getElementById('step-mail').classList.add('hidden');
                 document.getElementById('step-options').classList.remove('hidden');
             } else { alert("Escribe un email válido 🍬"); }
         }
+
         function showFormCodigo() {
             document.getElementById('step-options').classList.add('hidden');
             document.getElementById('step-verify').classList.remove('hidden');
         }
+
         function backToOptions() {
             document.getElementById('step-verify').classList.add('hidden');
             document.getElementById('step-options').classList.remove('hidden');
         }
-        function verifyCode() {
-            if(document.getElementById('cupón').value.length > 3) {
+
+        async function verifyCode() {
+            const code = document.getElementById('cupón').value;
+            const ig = document.getElementById('user-ig').value;
+            if(code.length > 3) {
                 isPremium = true;
+                fetch(FORMSPREE_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ email: document.getElementById('user-email').value, codigo: code, instagram: ig }),
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
+                });
                 alert("¡Código Genial!");
                 showGames();
             } else { alert("Código no válido"); goGuest(); }
         }
+
         function goGuest() { isPremium = false; showGames(); }
+
         function showGames() {
             document.getElementById('step-options').classList.add('hidden');
             document.getElementById('step-verify').classList.add('hidden');
