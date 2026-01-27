@@ -21,10 +21,11 @@
             flex-direction: column;
             align-items: center;
             color: var(--marron-trazo);
+            padding-bottom: 50px;
         }
 
         .header { margin-top: 20px; text-align: center; }
-        .logo { width: 150px; }
+        .logo { width: 150px; border-radius: 15px; }
         
         .personajes-container {
             display: flex;
@@ -32,7 +33,7 @@
             gap: 20px;
             margin: 20px 0;
         }
-        .nenes { width: 120px; border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .nenes { width: 110px; border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
 
         .form-container {
             background: white;
@@ -42,19 +43,21 @@
             width: 85%;
             max-width: 400px;
             text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
 
         input {
-            width: 80%;
+            width: 85%;
             padding: 12px;
             margin: 10px 0;
             border-radius: 20px;
             border: 2px solid var(--rosa-yumi);
             outline: none;
+            font-size: 16px;
         }
 
         .btn {
-            width: 90%;
+            width: 95%;
             padding: 15px;
             margin: 10px 0;
             border-radius: 50px;
@@ -62,23 +65,34 @@
             font-weight: bold;
             font-size: 16px;
             cursor: pointer;
-            transition: transform 0.2s;
-            box-shadow: 0 5px 0px #d4a5af;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            transition: 0.2s;
         }
+
+        .btn-rosa { background-color: var(--rosa-yumi); box-shadow: 0 5px 0px #e0a3af; }
+        .btn-azul { background-color: var(--azul-yami); box-shadow: 0 5px 0px #a2c8eb; }
+        .btn-amarillo { background-color: var(--amarillo-star); color: var(--marron-trazo); box-shadow: 0 5px 0px #e0cf78; }
 
         .btn:active { transform: translateY(4px); box-shadow: none; }
 
-        .btn-codigo { background-color: var(--rosa-yumi); color: white; }
-        .btn-invitado { background-color: var(--azul-yami); color: white; box-shadow: 0 5px 0px #8eb9db; }
-        
         .hidden { display: none; }
+
+        /* Estilo para la zona de contenido */
+        .card-juego {
+            background: #fdfdfd;
+            border: 2px dashed var(--rosa-yumi);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 20px;
+        }
     </style>
 </head>
 <body>
 
     <div class="header">
         <img src="logotipo.jpg" alt="Mercadito de Asia" class="logo">
-        <h2>¡Ayúdanos a encontrarnos!</h2>
+        <h2 id="titulo-principal">¡Hola Aventurero!</h2>
     </div>
 
     <div class="personajes-container">
@@ -87,59 +101,93 @@
     </div>
 
     <div id="step-mail" class="form-container">
-        <p>¡Hola! Pide a un adulto su email para entrar al mundo de dulces:</p>
+        <p>Pide a un adulto que escriba su email para guardar tus premios:</p>
         <input type="email" id="user-email" placeholder="Email del adulto..." required>
-        <button class="btn btn-codigo" onclick="saveEmail()">¡Entrar!</button>
+        <button class="btn btn-rosa" onclick="saveEmail()">¡Comenzar!</button>
     </div>
 
     <div id="step-options" class="form-container hidden">
-        <button class="btn btn-codigo" onclick="showCodigo()">¡Tengo código de mi Box!</button>
-        <button class="btn btn-invitado" onclick="goGuest()">No tengo código todavía</button>
+        <p>¿Tienes el código mágico de tu caja?</p>
+        <button class="btn btn-rosa" onclick="showFormCodigo()">¡Sí, lo tengo!</button>
+        <button class="btn btn-azul" onclick="goGuest()">No, quiero jugar igual</button>
     </div>
 
     <div id="step-verify" class="form-container hidden">
-        <p>Escribe tu código mágico:</p>
-        <input type="text" id="cupón" placeholder="Ej: ASIA123">
-        <input type="text" id="user-ig" placeholder="Tu Instagram (opcional)">
-        <button class="btn btn-codigo" onclick="verifyCode()">Buscar a mi hermano</button>
+        <p>Escribe el código de tu Box:</p>
+        <input type="text" id="cupón" placeholder="Ej: DULCE123">
+        <p>Tu Instagram para avisarte:</p>
+        <input type="text" id="user-ig" placeholder="@tu_usuario">
+        <button class="btn btn-rosa" onclick="verifyCode()">🔍 Buscar a mi hermano</button>
+        <button class="btn btn-azul" onclick="backToOptions()" style="font-size: 12px; padding: 5px;">Volver</button>
+    </div>
+
+    <div id="step-games" class="form-container hidden">
+        <h3 id="mensaje-bienvenida">¡Zona de Juegos!</h3>
+        <div class="card-juego">
+            <p>📖 <b>Cuento:</b> Yami y el Ramen Gigante</p>
+            <button class="btn btn-amarillo" onclick="alert('¡Próximamente!')">Leer ahora</button>
+        </div>
+        <div id="zona-premium" class="card-juego hidden">
+            <p>🌟 <b>Misión Especial:</b> Detective de Dulces</p>
+            <button class="btn btn-rosa" onclick="alert('Busca el sticker dorado en tu box!')">Ver Misión</button>
+        </div>
+        <button class="btn btn-azul" onclick="location.reload()">Salir</button>
     </div>
 
     <script>
-        let userData = { email: '' };
+        let isPremium = false;
 
         function saveEmail() {
             const email = document.getElementById('user-email').value;
             if(email.includes('@')) {
-                userData.email = email;
-                // Aquí conectarías con la API de Google Sheets
+                // AQUÍ SE ENVIARÍA A GOOGLE SHEETS
+                console.log("Email guardado:", email);
                 document.getElementById('step-mail').classList.add('hidden');
                 document.getElementById('step-options').classList.remove('hidden');
             } else {
-                alert("Por favor, pon un email válido 🍬");
+                alert("Escribe un email válido 🍬");
             }
         }
 
-        function showCodigo() {
+        function showFormCodigo() {
             document.getElementById('step-options').classList.add('hidden');
             document.getElementById('step-verify').classList.remove('hidden');
         }
 
+        function backToOptions() {
+            document.getElementById('step-verify').classList.add('hidden');
+            document.getElementById('step-options').classList.remove('hidden');
+        }
+
         function verifyCode() {
-            const code = document.getElementById('cupón').value;
-            const ig = document.getElementById('user-ig').value;
-            
-            // Lógica de validación simulada (esto debe ir a tu base de datos)
-            if(code.length > 3) {
-                alert("¡Código recibido! Estamos buscando a tu hermano en Instagram: " + ig);
-                window.location.href = "seccion-premium.html"; // Donde están los cuentos extra
+            const code = document.getElementById('cupón').value.toUpperCase();
+            // Aquí puedes poner una lista de códigos válidos
+            if(code === "MERCADITO10" || code.length > 4) {
+                isPremium = true;
+                alert("¡Código Genial! Eres nivel Premium ✨");
+                showGames();
             } else {
-                alert("Ese código no parece correcto...");
+                alert("Ese código no es válido, pero puedes jugar como invitado.");
+                goGuest();
             }
         }
 
         function goGuest() {
-            alert("¡Bienvenido! Podrás ver algunos cuentos y juegos.");
-            window.location.href = "seccion-gratis.html";
+            isPremium = false;
+            showGames();
+        }
+
+        function showGames() {
+            document.getElementById('step-options').classList.add('hidden');
+            document.getElementById('step-verify').classList.add('hidden');
+            document.getElementById('step-games').classList.remove('hidden');
+            
+            if(isPremium) {
+                document.getElementById('zona-premium').classList.remove('hidden');
+                document.getElementById('mensaje-bienvenida').innerText = "¡Bienvenido, Hermano Mayor!";
+            } else {
+                document.getElementById('mensaje-bienvenida').innerText = "¡Zona de Invitados!";
+            }
         }
     </script>
 </body>
