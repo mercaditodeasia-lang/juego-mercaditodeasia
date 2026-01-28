@@ -78,7 +78,28 @@
         <p>Escribe tu código y tu Instagram:</p>
         <input type="text" id="cupón" placeholder="Código de la caja">
         <input type="text" id="user-ig" placeholder="@tu_usuario">
-        <button class="btn btn-rosa" onclick="verifyCode()">Buscar a mi hermano</button>
+        <button class="btn btn-rosa" onclick="verifyCode(function verifyCode() {
+            // Tomamos el código y lo ponemos en MAYÚSCULAS para que no haya errores
+            const code = document.getElementById('cupón').value.trim().toUpperCase();
+            const ig = document.getElementById('user-ig').value;
+            const email = document.getElementById('user-email').value;
+
+            // --- AQUÍ PONES TUS CÓDIGOS VÁLIDOS ---
+            const codigosValidos = ["DULCE123", "MAGIA20", "YAMIYUMI", "STICKER"]; 
+
+            if(codigosValidos.includes(code)) {
+                isPremium = true;
+                fetch(FORMSPREE_URL, { 
+                    method: 'POST', 
+                    body: JSON.stringify({ email: email, codigo: code, instagram: ig, estado: "Premium" }), 
+                    headers: { 'Content-Type': 'application/json' } 
+                });
+                alert("¡Código Genial! ✨");
+                showGames();
+            } else { 
+                alert("Ese código no es correcto. ¡Revisa tu caja!"); 
+            }
+        }">Buscar a mi hermano</button>
         <button class="btn btn-azul" onclick="backToOptions()" style="font-size: 12px; height: 35px;">Volver</button>
     </div>
 
