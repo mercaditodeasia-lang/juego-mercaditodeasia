@@ -23,7 +23,6 @@
             animation: flotar 3s ease-in-out infinite;
         }
         @keyframes flotar { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-        
         .form-container {
             background: white; padding: 25px; border-radius: 30px; border: 4px solid var(--azul-yami);
             width: 85%; max-width: 400px; text-align: center; box-shadow: 0 8px 16px rgba(0,0,0,0.05);
@@ -41,13 +40,9 @@
         .btn-amarillo { background-color: var(--amarillo-star); color: var(--marron-trazo); box-shadow: 0 4px 0px #e0cf78; }
         .btn:active { transform: translateY(2px); box-shadow: none; }
         .hidden { display: none; }
-        
-        .card-juego { 
-            background: #fff9e6; border: 2px dashed var(--rosa-yumi); 
-            margin: 15px 0; padding: 15px; border-radius: 20px; text-align: left;
-        }
+        .card-juego { background: #fff9e6; border: 2px dashed var(--rosa-yumi); margin: 15px 0; padding: 15px; border-radius: 20px; text-align: left; }
         .mision-badge { background: var(--amarillo-star); font-size: 12px; padding: 4px 8px; border-radius: 10px; font-weight: bold; }
-        .cuento-texto { font-size: 14px; line-height: 1.5; color: #444; background: white; padding: 10px; border-radius: 10px; display: none; margin-top: 10px; }
+        .cuento-texto { font-size: 14px; line-height: 1.5; color: #444; background: white; padding: 15px; border-radius: 10px; display: none; margin-top: 10px; border: 1px solid #eee; }
     </style>
 </head>
 <body>
@@ -78,28 +73,7 @@
         <p>Escribe tu código y tu Instagram:</p>
         <input type="text" id="cupón" placeholder="Código de la caja">
         <input type="text" id="user-ig" placeholder="@tu_usuario">
-        <button class="btn btn-rosa" onclick="verifyCode(function verifyCode() {
-            // Tomamos el código y lo ponemos en MAYÚSCULAS para que no haya errores
-            const code = document.getElementById('cupón').value.trim().toUpperCase();
-            const ig = document.getElementById('user-ig').value;
-            const email = document.getElementById('user-email').value;
-
-            // --- AQUÍ PONES TUS CÓDIGOS VÁLIDOS ---
-            const codigosValidos = ["DULCE123", "MAGIA20", "YAMIYUMI", "STICKER"]; 
-
-            if(codigosValidos.includes(code)) {
-                isPremium = true;
-                fetch(FORMSPREE_URL, { 
-                    method: 'POST', 
-                    body: JSON.stringify({ email: email, codigo: code, instagram: ig, estado: "Premium" }), 
-                    headers: { 'Content-Type': 'application/json' } 
-                });
-                alert("¡Código Genial! ✨");
-                showGames();
-            } else { 
-                alert("Ese código no es correcto. ¡Revisa tu caja!"); 
-            }
-        }">Buscar a mi hermano</button>
+        <button class="btn btn-rosa" onclick="verifyCode()">Buscar a mi hermano</button>
         <button class="btn btn-azul" onclick="backToOptions()" style="font-size: 12px; height: 35px;">Volver</button>
     </div>
 
@@ -108,37 +82,32 @@
         
         <div id="mision-premium" class="card-juego hidden">
             <span class="mision-badge">MISIÓN DE LA SEMANA</span>
-            <p><b>¡Tu dulce favorito! 🍭:</b> Cuéntanos: ¿Cuál fue el dulce que más te gustó? ¿De qué color era y a qué sabía? ¡Si nos respondes, te revelaremos el secreto de cómo lo preparamos en nuestro bosque mágico!</p>
+            <p><b>¡Tu dulce favorito! 🍭</b></p>
+            <p>Cuéntanos: ¿Cuál te gustó más, de qué color era y qué sabor tenía? ¡Te contaremos el secreto de su magia!</p>
             <input type="text" id="respuesta-mision" placeholder="Respuesta aquí...">
             <button class="btn btn-amarillo" onclick="enviarMision()">Enviar Misión</button>
         </div>
 
         <div class="card-juego">
-            <p>📖 <b>Cuento:</b> Yami y Yumi</p>
+            <p><b>Cuento:</b> La Historia de Yami y Yumi</p>
             <button class="btn btn-azul" onclick="toggleCuento()">Leer Cuento</button>
             <div id="texto-cuento" class="cuento-texto">
-                ¡Hola! Somos Yami y Yumi, dos hermanos curiosos que viven en el Bosque de los Sabores, un rincón mágico donde las flores huelen a caramelo y los ríos corren llenos de jugo de frutas 🍭🍊.
-Desde ahí nacen nuestras aventuras. Viajamos por toda Asia, muy, muy lejos… del otro lado de Argentina, del otro lado de América, cruzando mercados, templos y ciudades llenas de colores, para descubrir golosinas mágicas y historias increíbles que queremos compartir con vos.
-Pero nuestra idea no es solo mostrar dulces. Queremos enriquecer a niños como vos, acercándolos a una cultura que vive al otro lado del mundo. A través de cada cuento, cada personaje y cada sabor, buscamos dejar enseñanzas lindas, mensajes sanos y valores que te acompañen, te despierten curiosidad y te ayuden a mirar el mundo con más imaginación y respeto.
-Porque conocer otras culturas también es una forma de crecer… y de soñar 🌏✨
-📚🎧 Muy pronto estaremos subiendo más cuentos con imágenes y audiolibros, para que la experiencia sea aún más divertida, mágica y enriquecedora.
-Esto recién empieza… y el viaje vale la pena 🍬🌈
-                
+                ¡Hola! Somos Yami y Yumi. Vivimos en el <b>Bosque de los Sabores</b>, un lugar mágico donde las flores huelen a caramelo. Viajamos por toda Asia buscando golosinas para compartir contigo. ¡Gracias por ser parte de la aventura!
             </div>
         </div>
 
         <div class="card-juego">
-            <p>🎮 <b>Zona de Juegos:</b></p>
+            <p><b>Zona de Juegos:</b></p>
             <button class="btn btn-amarillo" onclick="descargarJuego()">Descargar Juegos</button>
         </div>
 
         <div class="card-juego">
-            <p>🛍️ <b>Novedades Mercadito:</b></p>
-            <button class="btn btn-rosa" onclick="window.open('https://mercaditodeasia.empretienda.com.ar', '_blank')">Ver Merchandising</button>
+            <p><b>Novedades Mercadito:</b></p>
+            <button class="btn btn-rosa" onclick="window.open('https://mercaditodeasia.empretienda.com.ar/', '_blank')">Ver Merchandising</button>
         </div>
 
         <div id="zona-premium" class="card-juego hidden" style="border-color: gold;">
-            <p>🌟 <b>SORPRESA PREMIUM:</b></p>
+            <p><b>SORPRESA PREMIUM:</b></p>
             <p>Usa el código <b>HERMANOS</b> en tu próxima compra para un 10% OFF.</p>
         </div>
         
@@ -167,17 +136,28 @@ Esto recién empieza… y el viaje vale la pena 🍬🌈
             document.getElementById('step-verify').classList.add('hidden');
             document.getElementById('step-games').classList.add('hidden');
             document.getElementById('step-options').classList.remove('hidden');
-            document.getElementById('titulo-principal').innerText = "¡Hola Aventurero!";
         }
 
         function verifyCode() {
-            const code = document.getElementById('cupón').value;
-            if(code.length > 2) {
+            const code = document.getElementById('cupón').value.trim().toUpperCase();
+            const ig = document.getElementById('user-ig').value;
+            const email = document.getElementById('user-email').value;
+
+            // LISTA DE CÓDIGOS VÁLIDOS (Edítalos aquí)
+            const codigosValidos = ["DULCE123", "YAMIYUMI", "BOX2024", "STICKER"];
+
+            if(codigosValidos.includes(code)) {
                 isPremium = true;
-                fetch(FORMSPREE_URL, { method: 'POST', body: JSON.stringify({ email: document.getElementById('user-email').value, codigo: code, ig: document.getElementById('user-ig').value }), headers: { 'Content-Type': 'application/json' } });
+                fetch(FORMSPREE_URL, { 
+                    method: 'POST', 
+                    body: JSON.stringify({ email: email, codigo: code, instagram: ig, estado: "Premium" }), 
+                    headers: { 'Content-Type': 'application/json' } 
+                });
                 alert("¡Código Genial! ✨");
                 showGames();
-            } else { alert("Escribe un código válido"); }
+            } else { 
+                alert("Ese código no es correcto. ¡Revisa el sticker de tu caja!"); 
+            }
         }
 
         function goGuest() { isPremium = false; showGames(); }
@@ -186,7 +166,6 @@ Esto recién empieza… y el viaje vale la pena 🍬🌈
             document.getElementById('step-options').classList.add('hidden');
             document.getElementById('step-verify').classList.add('hidden');
             document.getElementById('step-games').classList.remove('hidden');
-            
             if(isPremium) {
                 document.getElementById('mision-premium').classList.remove('hidden');
                 document.getElementById('zona-premium').classList.remove('hidden');
@@ -203,17 +182,18 @@ Esto recién empieza… y el viaje vale la pena 🍬🌈
             c.style.display = (c.style.display === 'block') ? 'none' : 'block';
         }
 
+        function descargarJuego() {
+            window.open('juego1.jpg', '_blank');
+        }
+
         function enviarMision() {
             const r = document.getElementById('respuesta-mision').value;
             if(r.length > 1) {
-                fetch(FORMSPREE_URL, { method: 'POST', body: JSON.stringify({ email: document.getElementById('user-email').value, mision: "Respuesta Sticker", respuesta: r }), headers: { 'Content-Type': 'application/json' } });
-                alert("¡Misión enviada! Yami y Yumi están muy felices. 🍬");
+                fetch(FORMSPREE_URL, { method: 'POST', body: JSON.stringify({ email: document.getElementById('user-email').value, mision: "Respuesta Dulce Favorito", respuesta: r }), headers: { 'Content-Type': 'application/json' } });
+                alert("¡Recibido! Yami y Yumi ya están buscando el secreto de ese dulce para ti. 🍬");
                 document.getElementById('respuesta-mision').value = "";
-            }
+            } else { alert("¡Cuéntanos un poquito más!"); }
         }
-function descargarJuego() {
-    // Esto hace que cuando toquen el botón, se abra la imagen
-    window.open('juego1.jpg', '_blank');
-}</script>
+    </script>
 </body>
 </html>
